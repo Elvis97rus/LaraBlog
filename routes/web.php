@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/category/{category:slug}', [PostController::class, 'byCategory'])->name('post.by-category');
+Route::get('/about-us', [SiteController::class, 'about'])->name('page.about-us');
+Route::get('/{post:slug}', [PostController::class, 'show'])->name('post.show');
