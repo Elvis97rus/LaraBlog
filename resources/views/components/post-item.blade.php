@@ -1,6 +1,6 @@
 <article class="bg-white flex flex-col shadow my-4">
     <!-- Article Image -->
-    <a href="{{route('post.show', $post)}}" class="hover:opacity-75">
+    <a href="{{route('post.show', $post)}}" class="hover:opacity-75 mx-auto">
         <img class="aspect-[4/3] object-contain" src="{{$post->getThumbnail()}}" alt="{{$post->title}}">
     </a>
 
