@@ -56,7 +56,14 @@
                   class="hover:bg-blue-600 hover:text-white rounded py-2 px-4 mx-2 {{ ( request()->route()->getName() == 'page.about-us') ? 'bg-blue-600 text-white' : '' }}">
                    About Us</a>
            </div>
-            <div>
+
+            <div class="flex items-center">
+                <form method="get" action="{{ route('post.search') }}">
+                    <input name="q" value="{{ request()->get('q') }}" placeholder="Search for anything here..."
+                           class="mx-4 block w-full max-w-7xl rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+                   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                </form>
+
                 @auth
                     <!-- Settings Dropdown -->
                     <div class="sm:flex sm:items-center sm:ml-6 text-black">
@@ -105,8 +112,7 @@
 </nav>
 
 
-<div class="container mx-auto flex flex-wrap py-6">
-
+<div class="container mx-auto py-6">
     {{ $slot }}
 
 </div>
