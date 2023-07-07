@@ -5,16 +5,18 @@
 
 <x-app-layout :meta-title="env('APP_NAME') .' - Posts by category '. $category->title"
               :meta-description="$category->title  . ' By Category - Learn2Crypto\'s personal blog about crypto tutorials.'">
-    <!-- Posts Section -->
-    <section class="w-full md:w-2/3 flex flex-col items-center px-3">
+    <div class="flex flex-wrap">
+        <!-- Posts Section -->
+        <section class="w-full md:w-2/3 flex flex-col items-center px-3">
 
-        @foreach($posts as $post)
-            <x-post-item :post="$post"></x-post-item>
-        @endforeach
+            @foreach($posts as $post)
+                <x-post-item :post="$post"></x-post-item>
+            @endforeach
 
-        {{$posts->onEachSide(1)->links()}}
+            {{$posts->onEachSide(1)->links()}}
 
-    </section>
+        </section>
 
-    <x-sidebar />
+        <x-sidebar />
+    </div>
 </x-app-layout>

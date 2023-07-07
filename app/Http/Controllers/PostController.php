@@ -105,11 +105,23 @@ class PostController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * return Post collection according to query
      */
-    public function store(Request $request)
+    public function search(Request $request)
     {
-        //
+        $q = htmlspecialchars($request->get('q'));
+
+        $posts = Post::query()
+            ->where('active', 1)
+            ->whereDate('published_at', '<=', Carbon::now())
+            ->orderBy('published_at', 'desc')
+            ->where(function ($query) use ($q){
+                $query->where('title', 'like', "%$q%")
+                    ->orWhere('body', 'like', "%$q%");
+            })
+            ->paginate(10);
+
+        return view('post.search', compact('posts'));
     }
 
     /**
