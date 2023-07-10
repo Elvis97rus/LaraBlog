@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Services\Constants;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -83,7 +84,9 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
+
+    'locales' => Constants::getLocales(),
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +99,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------

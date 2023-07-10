@@ -7,6 +7,7 @@ use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
 use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -41,10 +42,30 @@ class PostResource extends Resource
                                 ->required()
                                 ->maxLength(2048),
                         ]),
-                        Forms\Components\RichEditor::make('body')
-                            ->required(),
-                        Forms\Components\TextInput::make('meta_title'),
-                        Forms\Components\TextInput::make('meta_description'),
+                        Forms\Components\Select::make('related_posts_id')
+                            ->label(__('basic.related_to'))
+                            ->relationship('relatedTo', 'title'),
+                        //
+                        Tabs::make('Heading')
+                            ->tabs([
+                                Tabs\Tab::make('RU')
+                                    ->schema([
+                                        Forms\Components\RichEditor::make('body')
+                                            ->required(),
+                                        Forms\Components\TextInput::make('meta_title'),
+                                        Forms\Components\TextInput::make('meta_description'),
+                                    ]),
+                                Tabs\Tab::make('EN')
+                                    ->schema([
+                                        Forms\Components\TextInput::make('meta_title_en'),
+                                        Forms\Components\TextInput::make('meta_description_en'),
+                                        Forms\Components\TextInput::make('title_en'),
+                                        Forms\Components\RichEditor::make('body_en'),
+                                    ])
+                            ])
+                            ->activeTab(2),
+
+                        //
                         Forms\Components\Toggle::make('active')
                             ->required(),
                         Forms\Components\DateTimePicker::make('published_at'),
@@ -64,7 +85,7 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->searchable(['title', 'body'])->sortable(),
+                Tables\Columns\TextColumn::make('title')->searchable(['title', 'body','title_en', 'body_en'])->sortable(),
 //                Tables\Columns\TextColumn::make('slug'),
                 Tables\Columns\ImageColumn::make('thumbnail'),
 //                Tables\Columns\TextColumn::make('body'),

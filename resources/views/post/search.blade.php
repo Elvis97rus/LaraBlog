@@ -11,7 +11,7 @@
 
             @foreach($posts as $post)
                 <div>
-                    <a href="{{ route('post.show', $post) }}">
+                    <a href="{{ route('post.show'. \App\Http\Services\Constants::getCurrentLocale(), $post) }}">
                         <h2 class="text-blue-500 font-bold text-lg sm:text-xl mb-2">
                             {!!
                                 str_replace(

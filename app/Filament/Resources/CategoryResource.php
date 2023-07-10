@@ -7,6 +7,7 @@ use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Closure;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -37,6 +38,22 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(2048),
+                //
+                Tabs::make('Heading')
+                    ->tabs([
+                        Tabs\Tab::make('RU')
+                            ->schema([
+                                Forms\Components\TextInput::make('meta_title'),
+                                Forms\Components\TextInput::make('meta_description'),
+                            ]),
+                        Tabs\Tab::make('EN')
+                            ->schema([
+                                Forms\Components\TextInput::make('title_en'),
+                                Forms\Components\TextInput::make('meta_title_en'),
+                                Forms\Components\TextInput::make('meta_description_en'),
+                            ])
+                    ])
+                    ->activeTab(2)->columnSpan(8),
             ]);
     }
 
@@ -44,7 +61,7 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('title')->searchable(['title', 'title_en'])->sortable(),
 //                Tables\Columns\TextColumn::make('slug'),
 //                Tables\Columns\TextColumn::make('created_at')
 //                    ->dateTime(),

@@ -38,6 +38,12 @@ class CommentItem extends Component
         }
 
         $id = $this->comment->id;
+        $rel_comments = Comment::where('parent_id', $id)->get();
+        if ($rel_comments->count()){
+            foreach ($rel_comments as $item) {
+                $item->delete();
+            }
+        }
         $this->comment->delete();
 
         $this->emitUp('commentDeleted', $id);

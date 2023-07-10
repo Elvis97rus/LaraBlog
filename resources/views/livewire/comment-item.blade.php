@@ -17,7 +17,9 @@
             </div>
         @endif
         <div>
-            <a wire:click.prevent="startReply" href="#" class="font-semibold text-indigo-600 text-sm mr-2">Reply</a>
+            @if(!$comment->parent_id)
+                <a wire:click.prevent="startReply" href="#" class="font-semibold text-indigo-600 text-sm mr-2">Reply</a>
+            @endif
             @if(\Illuminate\Support\Facades\Auth::id() == $comment->user_id)
                 <a wire:click.prevent="startCommentEdit" href="#" class="font-semibold text-edit-600 text-sm mr-2">Edit</a>
                 <a wire:click.prevent="deleteComment" href="#" class="font-semibold text-red-600 text-sm">Delete</a>

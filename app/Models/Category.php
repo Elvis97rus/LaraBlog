@@ -11,7 +11,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug'];
+    protected $fillable = ['title', 'slug', 'meta_title_en', 'meta_description_en', 'meta_title', 'meta_description', 'title_en'];
 
     public function posts(): BelongsToMany
     {
