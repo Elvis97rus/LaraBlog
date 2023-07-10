@@ -18,11 +18,6 @@ class PostController extends Controller
      */
     public function home(): View
     {
-        $posts = Post::query()
-            ->where('active', '=', 1)
-            ->whereDate('published_at', '<', Carbon::now())
-            ->orderBy('published_at', 'desc')
-            ->paginate(2);
         // show 3 latest posts
         $latestPost = Post::where('active',1)
             ->whereDate('published_at', '<', Carbon::now())
@@ -147,6 +142,16 @@ class PostController extends Controller
             ->orderBy('published_at', 'asc')
             ->limit(1)->first();
 
+        $related = Post::query()
+            ->where('active', 1)
+            ->whereDate('published_at', '<=', Carbon::now())
+            ->where('id', '!=', $post->id)
+            ->where(function ($query) use ($post){
+                $query->where('related_posts_id', $post->id)->orWhere('id', $post->related_posts_id);
+            })
+            ->orderBy('published_at', 'asc')
+            ->get();
+
 //        dd($prev);
 //        if (!$prev) {
 //            $prev = Post::query()
@@ -175,7 +180,7 @@ class PostController extends Controller
         // TODO сделать токены(5минутные/часовые) записываемые в куку,
         // чтобы было понятно что это один человек перезаходит на страницу, проверять наличие токена, записывать токен в бд
 
-        return view('post.show', compact('post', 'next', 'prev'));
+        return view('post.show', compact('post', 'next', 'prev', 'related'));
     }
 
     public function byCategory(Category $category)
