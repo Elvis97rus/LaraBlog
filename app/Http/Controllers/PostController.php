@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\Constants;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostView;
@@ -72,9 +73,6 @@ class PostController extends Controller
 
         //show recent categories with their latest posts
         $categories = Category::query()
-//            ->with(['posts' => function($query){
-//                $query->orderByDesc('published_at')->limit(3);
-//            }])
             ->whereHas('posts', function($query){
                 $query->where('active', 1)
                     ->whereDate('published_at', '<', Carbon::now());
@@ -87,8 +85,7 @@ class PostController extends Controller
             ->groupBy('categories.id')
             ->limit(5)
             ->get();
-
-        return view('home', compact('latestPost', 'popularPosts', 'recommendedPosts', 'categories'));
+        return view('home', compact('latestPost', 'popularPosts', 'categories', 'recommendedPosts' ));
     }
 
     /**

@@ -20,7 +20,7 @@ class AppLayout extends Component
     {
         $this->categories = Category::query()
             ->join('category_post', 'categories.id', '=', 'category_post.category_id')
-            ->select('categories.title', 'categories.slug', DB::raw('count(*) as total'))
+            ->select('categories.*', DB::raw('count(*) as total'))
             ->groupBy('categories.id')
             ->orderByDesc('total')
             ->limit(5)
