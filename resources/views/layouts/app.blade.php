@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html
+    lang="{{ str_replace('_', '-', app()->getLocale()) }}" {{str_contains(request()->route()->getName(), 'post.show') && $postMeta ? 'prefix="og:http://ogp.me/ns#"' : ''}}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{{--    <title>{{ $metaTitle ?: env('APP_NAME') }}</title>--}}
+    <title>{{ $metaTitle ?: env('APP_NAME') }}{{$pag && $pag['currentPage'] > 1 ? $pag['meta_addition'] : ''}}</title>
     <meta name="author" content="Learn2Crypto">
-    <meta name="title" content="{{ $metaTitle ?: env('APP_NAME') }}">
-    <meta name="description" content="{{ $metaDescription }}">
+    <meta name="title" content="{{ $metaTitle ?: env('APP_NAME') }}{{$pag && $pag['currentPage'] > 1 ? $pag['meta_addition'] : ''}}">
+    <meta name="description" content="{{ $metaDescription }}{{$pag && $pag['currentPage'] > 1 ? $pag['meta_addition'] : ''}}">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    @if($pages && $pag['currentPage'])
+        <link rel="canonical" href="{{$pag['currentPage'] == 1 ? $pag['url'] : $pag['url'] . '?page='. $pag['currentPage']}}">
+    @endif
+    @if($pages && $pag['nextPage'])
+        <link rel="next" href="{{$pag['url']}}?page={{$pag['nextPage']}}">
+    @endif
+    @if($pages && $pag['prevPage'])
+        <link rel="prev" href="{{$pag['url']}}?page={{$pag['prevPage']}}">
+    @endif
+
+    @if(str_contains(request()->route()->getName(), 'post.show') && $postMeta)
+        <meta property="og:title" content="{{ app()->getLocale() == 'en' ? $postMeta->title_en :$postMeta->title }}{{$pag && $pag['currentPage'] > 1 ? $pag['meta_addition'] : ''}}">
+        <meta property="og:description"
+              content="{{ app()->getLocale() == 'en' ? $postMeta->meta_description_en :$postMeta->meta_description }}{{$pag && $pag['currentPage'] > 1 ? $pag['meta_addition'] : ''}}">
+        <meta property="og:image" content="{{ config('app.url') }}{{ $postMeta->getThumbnail() }}">
+        <meta property="og:url" content="{{ Request::url() }}">
+        <meta property="og:type" content="article">
+        <meta property="og:site_name"
+              content="{{ __('basic.name_crypto') }} - Блог о криптовалютах для новичков и не только!">
+        <meta property="og:locale" content="ru_RU"/>
+        <meta property="og:locale:alternate" content="en_GB"/>
+    @endif
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
@@ -23,7 +48,8 @@
 <!-- Text Header -->
 <header class="w-full container mx-auto">
     <div class="flex flex-col items-center py-12">
-        <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="{{route('home'. \App\Http\Services\Constants::getCurrentLocale())}}">
+        <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl"
+           href="{{route('home'. \App\Http\Services\Constants::getCurrentLocale())}}">
             {{ __('basic.name_crypto') }}
         </a>
         <p class="text-lg text-gray-600">
@@ -62,11 +88,14 @@
 
             <div class="flex items-center">
                 <div class="flex px-4 py-2">
-                    <a href="{{ route('locale.ru') }}" class="mr-2 px-2 rounded {{app()->getLocale() == 'ru'? 'bg-blue-400': ''}}">RU</a>
-                    <a href="{{ route('locale.en') }}" class="px-2 rounded {{app()->getLocale() == 'en'? 'bg-blue-400': ''}}">EN</a>
+                    <a href="{{ route('locale.ru') }}"
+                       class="mr-2 px-2 rounded {{app()->getLocale() == 'ru'? 'bg-blue-400': ''}}">RU</a>
+                    <a href="{{ route('locale.en') }}"
+                       class="px-2 rounded {{app()->getLocale() == 'en'? 'bg-blue-400': ''}}">EN</a>
                 </div>
 
-                <form method="get" action="{{ route('post.search'. \App\Http\Services\Constants::getCurrentLocale()) }}">
+                <form method="get"
+                      action="{{ route('post.search'. \App\Http\Services\Constants::getCurrentLocale()) }}">
                     <input name="q" value="{{ request()->get('q') }}" placeholder="{{__('basic.search')}}"
                            class="mx-4 block w-full max-w-7xl rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                    placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">

@@ -10,7 +10,7 @@ class SiteController extends Controller
 {
     public function about(): View
     {
-        $widget = TextWidget::getFull('about-us-page');
+        $widget = TextWidget::getFull('about-us');
         if (!$widget){
             throw new NotFoundHttpException();
         }

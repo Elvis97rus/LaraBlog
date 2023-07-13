@@ -3,7 +3,8 @@
 ?>
 
 
-<x-app-layout :meta-title="env('APP_NAME') .' - Posts by Search '"
+<x-app-layout :pages="$posts"
+              :meta-title="env('APP_NAME') .' - Posts by Search '"
               :meta-description="'Search  Posts - Learn2Crypto\'s personal blog about crypto tutorials.'">
     <div class="flex flex-wrap justify-center">
         <!-- Posts Section -->

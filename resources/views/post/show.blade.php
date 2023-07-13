@@ -1,4 +1,4 @@
-<x-app-layout
+<x-app-layout :post-meta="$post"
     :meta-title="app()->getLocale() == 'en' ? ($post->meta_title_en ?? $post->title_en . ' - ' . env('APP_NAME')) : ($post->meta_title ?? $post->title . ' - ' . env('APP_NAME'))"
     :meta-description="app()->getLocale() == 'en' ? $post->meta_description_en : $post->meta_description">
     <div class="flex flex-wrap">
@@ -59,6 +59,7 @@
                     @endif
                 </div>
             </div>
+
             @if($related->count())
                 <div class="w-full pt-6">
                     <h2 class="text-xl font-bold hover:text-gray-700 pb-4">{{__('basic.related_posts')}}</h2>

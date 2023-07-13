@@ -18,14 +18,19 @@ class TextWidget extends Model
                             'active'
     ];
 
+    public static function getUpdatedAt(string $key): string
+    {
+        $widget = TextWidget::getCacheWidgetByKey('text-widget-', $key);
+
+        if ($widget) {
+            return  $widget->updated_at->tz('UTC')->toAtomString();
+        }
+
+        return '';
+    }
+
     public static function getTitle(string $key): string
     {
-//        $widget = Cache::get('text-widget-' . $key, function () use($key) {
-//            return TextWidget::query()
-//                ->where('key', '=', $key)
-//                ->where('active', '=', 1)
-//                ->first();
-//        });
         $widget = TextWidget::getCacheWidgetByKey('text-widget-', $key);
 
         if ($widget) {
@@ -34,14 +39,9 @@ class TextWidget extends Model
 
         return '';
     }
+
     public static function getContent(string $key): string
     {
-//        $widget = Cache::get('text-widget-' . $key, function () use($key) {
-//            return TextWidget::query()
-//                ->where('key', '=', $key)
-//                ->where('active', '=', 1)
-//                ->first();
-//        });
         $widget = TextWidget::getCacheWidgetByKey('text-widget-', $key);
 
         if ($widget) {

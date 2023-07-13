@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function home(): View
     {
-        // show 3 latest posts
+        // show latest post
         $latestPost = Post::where('active',1)
             ->whereDate('published_at', '<', Carbon::now())
             ->orderBy('published_at', 'desc')
@@ -44,9 +44,7 @@ class PostController extends Controller
         // not authorised - show posts based on views
         $user = auth()->user();
         if ($user){
-            $leftJoin = "(SELECT cp.category_id, cp.post_id FROM upvote_downvotes
-                        JOIN category_post cp ON upvote_downvotes.post_id = cp.post_id
-                        WHERE upvote_downvotes.is_upvote = 1 and upvote_downvotes.user_id = ?) as t";
+            $leftJoin = "(SELECT cp.category_id, cp.post_id FROM upvote_downvotes JOIN category_post cp ON upvote_downvotes.post_id = cp.post_id WHERE upvote_downvotes.is_upvote = 1 and upvote_downvotes.user_id = ?) as t";
             $recommendedPosts = Post::query()
                 ->leftJoin('category_post as cp', 'post_id', '=', 'cp.post_id')
                 ->leftJoin(DB::raw($leftJoin), function ($join){
@@ -56,6 +54,7 @@ class PostController extends Controller
                 ->select('posts.*')
                 ->where('posts.id', '!=', DB::raw('t.post_id'))
                 ->setBindings([$user->id])
+                ->distinct('id')
                 ->limit(3)
                 ->get();
         }else{
@@ -68,6 +67,7 @@ class PostController extends Controller
                 ->groupBy('posts.id')
                 ->limit(3)
                 ->get();
+
         }
 
 
@@ -111,7 +111,7 @@ class PostController extends Controller
                 $query->where('title', 'like', "%$q%")
                     ->orWhere('body', 'like', "%$q%");
             })
-            ->paginate(10);
+            ->paginate(2);
 
         return view('post.search', compact('posts'));
     }
@@ -188,7 +188,7 @@ class PostController extends Controller
             ->where('active', 1)
             ->whereDate('published_at', '<=', Carbon::now())
             ->orderBy('published_at', 'desc')
-            ->paginate(10);
+            ->paginate(1);
 
         return view('post.index', compact('posts', 'category'));
     }

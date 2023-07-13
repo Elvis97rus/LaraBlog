@@ -6,6 +6,7 @@ return [
 
     'minutes' => 'min',
     'words' => 'words',
+    'page_meta' => 'Page',
     'home' => 'Home',
     'about_us' => 'About us',
     'search' => 'Search here for something...',

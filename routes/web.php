@@ -4,6 +4,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SitemapXmlController;
 use App\Http\Services\Constants;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+Route::get('/sitemap.xml', [SitemapXmlController::class, 'index']);
+
+Route::get('/', [PostController::class, 'home'])->name('home');
+Route::get('/search', [PostController::class, 'search'])->name('post.search');
+Route::get('/category/{category:slug}', [PostController::class, 'byCategory'])->name('post.by-category');
+Route::get('/about-us', [SiteController::class, 'about'])->name('page.about-us');
+
 Route::prefix('en')->group(function () {
     Route::get('/', [PostController::class, 'home'])->name('home.en');
     Route::get('/search', [PostController::class, 'search'])->name('post.search.en');
@@ -54,8 +62,6 @@ Route::prefix('en')->group(function () {
     Route::get('/{post:slug}', [PostController::class, 'show'])->name('post.show.en');
 });
 
-Route::get('/', [PostController::class, 'home'])->name('home');
-Route::get('/search', [PostController::class, 'search'])->name('post.search');
-Route::get('/category/{category:slug}', [PostController::class, 'byCategory'])->name('post.by-category');
-Route::get('/about-us', [SiteController::class, 'about'])->name('page.about-us');
 Route::get('/{post:slug}', [PostController::class, 'show'])->name('post.show');
+
+

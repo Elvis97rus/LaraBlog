@@ -17,16 +17,19 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->realText(50);
+        $title = fake()->realText(40);
+        $title_en = fake()->realText(40);
 
         return [
             'title' => $title,
+            'title_en' => $title_en,
             'slug' => Str::slug($title),
             'thumbnail' => fake()->imageUrl,
             'body' => fake()->realText(1000),
+            'body_en' => fake()->realText(1000),
             'active' => fake()->boolean,
             'published_at' => fake()->dateTime,
-            'user_id' => 2
+            'user_id' => 1
         ];
     }
 }
