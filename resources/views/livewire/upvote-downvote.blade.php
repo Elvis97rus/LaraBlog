@@ -10,4 +10,9 @@
         </svg>
         {{ $downvotes }}
     </button>
+    <!-- Facebook Share Button -->
+    <!-- uSocial -->
+    <script async src="https://usocial.pro/usocial/usocial.js?uid=971e4d6328f72594&v=6.1.5" data-script="usocial" charset="utf-8"></script>
+    <div class="uSocial-Share" data-pid="697a7072e3ccde2e74daa3995dfc15c6" data-type="share" data-options="round,style2,default,left,slide-down,size48,counter0,mobile_position_right" data-social="vk,fb,wa,telegram,twi"></div>
+    <!-- /uSocial -->
 </div>

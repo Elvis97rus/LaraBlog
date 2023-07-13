@@ -6,7 +6,7 @@
                     {!! __('pagination.previous') !!}
                 </span>
             @else
-                <a href="{{ $paginator->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                <a href="{{ str_replace('?page=1', '', $paginator->previousPageUrl()) }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
                     {!! __('pagination.previous') !!}
                 </a>
             @endif
@@ -27,7 +27,7 @@
                 <span class="relative z-0 inline-flex rounded-md">
                     {{-- Previous Page Link --}}
                     @if (!$paginator->onFirstPage())
-                        <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center mr-3" aria-label="{{ __('pagination.previous') }}">
+                        <a href="{{ str_replace('?page=1', '', $paginator->previousPageUrl()) }}" rel="prev" class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center mr-3" aria-label="{{ __('pagination.previous') }}">
                             <i class="fas fa-arrow-left mr-2"></i> Prev
                         </a>
                     @endif
@@ -49,7 +49,7 @@
                                         <span class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">{{ $page }}</span>
                                     </span>
                                 @else
-                                    <a href="{{ $url }}" class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center" aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
+                                    <a href="{{ str_replace('?page=1', '', $url) }}" class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center" aria-label="{{ __('Go to page :page', ['page' => $page]) }}">
                                         {{ $page }}
                                     </a>
                                 @endif

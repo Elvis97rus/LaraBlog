@@ -1,2 +1,15 @@
 User-agent: *
-Disallow:
+Disallow: *
+Disallow: /admin
+Disallow: /vendor
+Disallow: /node_modules
+Disallow: /storage
+Disallow: /tests
+Disallow: /database
+Disallow: /resources
+
+Allow: /storage/app/public/
+Allow: /storage/framework/
+Allow: /storage/logs/
+
+Sitemap: https://www.example.com/sitemap.xml

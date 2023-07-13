@@ -3,7 +3,8 @@
 ?>
 
 
-<x-app-layout :meta-title="env('APP_NAME') .' - Posts by category '. $category->title"
+<x-app-layout :pages="$posts"
+              :meta-title="env('APP_NAME') .' - Posts by category '. $category->title"
               :meta-description="$category->title  . ' By Category - Learn2Crypto\'s personal blog about crypto tutorials.'">
     <div class="flex flex-wrap">
         <!-- Posts Section -->
