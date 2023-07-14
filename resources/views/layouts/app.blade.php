@@ -17,7 +17,7 @@
         <link rel="next" href="{{$pag['url']}}?page={{$pag['nextPage']}}">
     @endif
     @if($pages && $pag['prevPage'])
-        <link rel="prev" href="{{$pag['url']}}?page={{$pag['prevPage']}}">
+        <link rel="prev" href="{{$pag['prevPage'] == 1 ? $pag['url'] : $pag['url']."?page={$pag['prevPage']}"}}">
     @endif
 
     @if(str_contains(request()->route()->getName(), 'post.show') && $postMeta)
