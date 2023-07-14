@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\Constants;
+use App\Http\Services\Cookies;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -17,7 +20,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function home(): View
+    public function home(Request $request): View
     {
         // show latest post
         $latestPost = Post::where('active',1)
@@ -124,6 +127,7 @@ class PostController extends Controller
         if (!$post->active || $post->published_at > Carbon::now()) {
             throw  new NotFoundHttpException();
         }
+
         $next = Post::query()
             ->where('active', 1)
             ->whereDate('published_at', '<=', Carbon::now())
@@ -168,19 +172,20 @@ class PostController extends Controller
 
         $user = $request->user();
 
-        PostView::create([
+        $hash = Cookies::cookieHandler();
+        PostView::firstOrCreate([
+            'user_token' => $hash
+        ],[
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'post_id' => $post->id,
             'user_id' => $user?->id,
         ]);
-        // TODO сделать токены(5минутные/часовые) записываемые в куку,
-        // чтобы было понятно что это один человек перезаходит на страницу, проверять наличие токена, записывать токен в бд
 
         return view('post.show', compact('post', 'next', 'prev', 'related'));
     }
 
-    public function byCategory(Category $category)
+    public function byCategory(Category $category, Request $request)
     {
         $posts = Post::query()
             ->join('category_post', 'posts.id', '=', 'category_post.post_id')

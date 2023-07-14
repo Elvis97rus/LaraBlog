@@ -16,3 +16,22 @@ pre {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+
+
+
+.scroll-to-top-link {
+    transition: all 0.5s ease;
+    animation: move 5s linear infinite;
+}
+
+@keyframes move {
+    0% {
+        background: #1e40af;
+    }
+    50% {
+        background: #1d4ed8;
+    }
+    100% {
+        background: #1e40af;
+    }
+}

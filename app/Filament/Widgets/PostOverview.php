@@ -21,4 +21,10 @@ class PostOverview extends Widget
     }
 
     protected static string $view = 'filament.widgets.post-overview';
+
+    public static function canView(): bool
+    {
+        return request()->route()->getName() != 'filament.pages.dashboard';
+    }
+
 }

@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\Post;
 use Carbon\Carbon;
 use Closure;
-//use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\Component;
