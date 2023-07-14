@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/sitemap.xml', [SitemapXmlController::class, 'index']);
+Route::get('/sitemap', [SitemapXmlController::class, 'humanMap']);
 
 Route::get('/', [PostController::class, 'home'])->name('home');
 Route::get('/search', [PostController::class, 'search'])->name('post.search');

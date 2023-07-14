@@ -7,8 +7,10 @@ return [
     'minutes' => 'min',
     'words' => 'words',
     'page_meta' => 'Page',
+
     'home' => 'Home',
     'about_us' => 'About us',
+
     'search' => 'Search here for something...',
     'latest_post' => 'Latest Post',
     'popular_posts' => 'Popular Posts',
@@ -18,8 +20,9 @@ return [
     'next' => 'Next',
     'prev' => 'Previous',
     'related_to' => 'Related To',
-
     'related_posts' => 'Related articles',
+    'sitemap' => 'Sitemap',
+    'category' => 'Category',
 
 
   ];

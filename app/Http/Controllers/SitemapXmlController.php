@@ -30,10 +30,32 @@ class SitemapXmlController extends Controller
             ->groupBy('categories.id')
             ->orderByDesc('total')
             ->get();
-        // основные страницы
 
         return response()
             ->view('sitemap.index', compact('posts', 'langs', 'categories'))
             ->header('Content-Type', 'text/xml');
+    }
+
+    public function humanMap()
+    {
+        $posts = Post::query()
+            ->where('active', 1)
+            ->whereDate('published_at', '<=', Carbon::now())
+            ->orderBy('published_at', 'desc')
+            ->get();
+        $langs = Constants::getLocales();
+
+        // категории для ру/ен
+        $categories = Category::query()
+            ->join('category_post', 'categories.id', '=', 'category_post.category_id')
+            ->join('posts', 'category_post.post_id', '=', 'posts.id')
+            ->where('active', '=', true)
+            ->whereDate('published_at', '<', Carbon::now())
+            ->select('categories.title','categories.title_en', 'categories.slug','categories.updated_at', DB::raw('count(*) as total'))
+            ->groupBy('categories.id')
+            ->orderByDesc('total')
+            ->get();
+
+        return view('sitemap.human', compact('posts', 'langs', 'categories'));
     }
 }

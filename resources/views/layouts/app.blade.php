@@ -46,7 +46,7 @@
 </head>
 <body class="bg-gray-50 font-family-karla">
 <!-- Text Header -->
-<header class="w-full container mx-auto">
+<header  class="w-full container mx-auto">
     <div class="flex flex-col items-center py-12">
         <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl"
            href="{{route('home'. \App\Http\Services\Constants::getCurrentLocale())}}">
@@ -89,9 +89,9 @@
             <div class="flex items-center">
                 <div class="flex px-4 py-2">
                     <a href="{{ route('locale.ru') }}"
-                       class="mr-2 px-2 rounded {{app()->getLocale() == 'ru'? 'bg-blue-400': ''}}">RU</a>
+                       class="mr-2 px-2 rounded {{app()->getLocale() == 'ru'? 'bg-blue-600 text-white': ''}}">RU</a>
                     <a href="{{ route('locale.en') }}"
-                       class="px-2 rounded {{app()->getLocale() == 'en'? 'bg-blue-400': ''}}">EN</a>
+                       class="px-2 rounded {{app()->getLocale() == 'en'? 'bg-blue-600 text-white': ''}}">EN</a>
                 </div>
 
                 <form method="get"
@@ -157,10 +157,12 @@
     {{ $slot }}
 
 </div>
-
+<livewire:scroll-to-top-link />
 <footer class="w-full border-t bg-white pb-12">
+
     <div class="w-full container mx-auto flex flex-col items-center">
         <div class="uppercase py-6">&copy; myblog.com</div>
+        <a href="/sitemap" class="font-bold text-md hover:text-blue-600">{{__('basic.sitemap')}}</a>
     </div>
 </footer>
 
