@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Subscriber;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -41,6 +42,13 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $subscriber = Subscriber::updateOrCreate(
+            ['email' => $user->email],
+            [
+                'user_id' => $user->id
+            ]
+        );
 
         event(new Registered($user));
 

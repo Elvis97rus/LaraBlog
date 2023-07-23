@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SitemapXmlController;
+use App\Http\Livewire\SubscribeForm;
 use App\Http\Services\Constants;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::post('/subscribe-form', SubscribeForm::class);
 
 // Routes for switching language to 'ru'
 Route::get('/locale-ru', function () {
@@ -42,6 +44,7 @@ Route::get('/locale-en', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile-subscribe', [ProfileController::class, 'subscribe'])->name('profile.subscribe');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
