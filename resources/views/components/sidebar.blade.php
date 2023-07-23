@@ -11,6 +11,7 @@
         @endforeach
     </div>
 
+    @if(\App\Models\TextWidget::getTitle('about-us-aside'))
     <div class="w-full bg-white shadow flex flex-col my-4 p-6">
         <p class="text-xl font-semibold pb-5">
             {{ \App\Models\TextWidget::getTitle('about-us-aside') }}
@@ -22,5 +23,7 @@
             Get to know us
         </a>
     </div>
+    @endif
 
+    <livewire:subscribe-form />
 </aside>

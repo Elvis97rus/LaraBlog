@@ -38,6 +38,24 @@ class ProfileController extends Controller
     }
 
     /**
+     * Manage subscription information of the user.
+     */
+    public function subscribe(Request $request): RedirectResponse
+    {
+//        dd($request->user(), $request->subscribe);
+        $subscribe = $request->user()->subscribe;
+//        dd($subscribe);
+        $subscribe->send_mail = (bool)$request->subscribe;
+//        if ($request->user()->isDirty('email')) {
+//            $request->user()->email_verified_at = null;
+//        }
+
+        $subscribe->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
@@ -50,6 +68,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
+        $user->subscribe->delete();
         $user->delete();
 
         $request->session()->invalidate();
