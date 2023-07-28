@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use Carbon\Carbon;
 use Closure;
+use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\Component;
@@ -59,7 +60,16 @@ class AppLayout extends Component
                 'url' => request()->url(),
             ];
         }
+        $coins = $this->getCryptoDataPrice();
         $categories = $this->categories;
-        return view('layouts.app', compact('categories', 'pag'));
+        return view('layouts.app', compact('categories', 'pag', 'coins'));
+    }
+
+    public function getCryptoDataPrice($type = 'pricemulti')
+    {
+        $client = new Client();
+        $api_response = $client->get('https://min-api.cryptocompare.com/data/'.$type.'?fsyms=BTC,ETH,XRP,ADA,ATOM,TON,NEAR,ETC&tsyms=USD,EUR,CNY,GBP,RUB,THB');
+        $data = json_decode($api_response->getBody());//->data->products->data ?? [];
+        return $data;
     }
 }

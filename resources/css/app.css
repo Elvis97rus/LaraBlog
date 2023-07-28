@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-
 .font-family-karla {
     font-family: karla;
 }
@@ -17,6 +16,25 @@ pre {
     margin-bottom: 0.5rem;
 }
 
+.coin-card {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+.uscl-list, .uscl-slide-open{
+    left: 0!important;
+}
+.coin-card > .currencyMenuBox {
+    display: none;
+    position: absolute;
+    background: #f3f4f6;
+
+}
+
+.coin-card:hover .currencyMenuBox, .coin-card:focus .currencyMenuBox, .coin-card:active .currencyMenuBox {
+    display: block !important;
+}
 
 
 .scroll-to-top-link {

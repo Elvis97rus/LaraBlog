@@ -54,19 +54,22 @@
             </div>
         </div>
 
+
+        @if($recommendedPosts->count())
         <!-- Recommended Posts -->
         <div class="mb-8">
             <h2 class="text-lg sm:text-xl font-bold text-blue-500 uppercase pb-1 border-b-2 boder-blue-500 mb-3">
                 {{ __('basic.recommended_posts') }}
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                @if($recommendedPosts)
+
                     @foreach($recommendedPosts as $post)
                         <x-post-item :post="$post" :show-author="false"/>
                     @endforeach
-                @endif
+
             </div>
         </div>
+        @endif
 
         <!-- Latest Categories -->
 

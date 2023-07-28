@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SiteController;
@@ -22,10 +23,12 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
+
+require __DIR__.'/auth.php';
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::post('/subscribe-form', SubscribeForm::class);
 
@@ -47,8 +50,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile-subscribe', [ProfileController::class, 'subscribe'])->name('profile.subscribe');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-require __DIR__.'/auth.php';
 
 Route::get('/sitemap.xml', [SitemapXmlController::class, 'index']);
 Route::get('/sitemap', [SitemapXmlController::class, 'humanMap']);

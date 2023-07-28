@@ -23,6 +23,8 @@ return [
     'related_posts' => 'Related articles',
     'sitemap' => 'Sitemap',
     'category' => 'Category',
+    'menu' => 'Menu',
+    'all-categories' => 'All Categories',
 
 
   ];

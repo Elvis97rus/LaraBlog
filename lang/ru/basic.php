@@ -22,4 +22,6 @@ return [
     'related_posts' => 'Связанные статьи',
     'sitemap' => 'Карта сайта',
     'category' => 'Категория',
+    'menu' => 'Меню',
+    'all-categories' => 'Все категории',
   ];
