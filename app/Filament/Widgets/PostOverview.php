@@ -11,6 +11,7 @@ class PostOverview extends Widget
 {
     protected int | string | array $columnSpan = 3;
     public ?Model $record = null;
+
     protected function getViewData(): array
     {
         return [

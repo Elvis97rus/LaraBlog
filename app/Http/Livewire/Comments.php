@@ -24,8 +24,15 @@ class Comments extends Component
     public function render()
     {
         $comments = $this->getCommentsByDate();
+        $comment_msg = $this->getUnapprovedUserComments();
+        return view('livewire.comments', compact('comments', 'comment_msg'));
+    }
 
-        return view('livewire.comments', compact('comments'));
+    protected function getUnapprovedUserComments($active = false)
+    {
+        $count = Comment::where('user_id', auth()->user()->id)
+            ->where('is_active', $active)->where('post_id', '=', $this->post->id)->get()->count();
+        return $count ? "Спасибо за оставленный комментарий! Он появится после модерации. <br> (модерация занимает до 2х суток)" : '';
     }
 
     protected function getCommentsByDate($order = 'desc')
@@ -33,6 +40,7 @@ class Comments extends Component
         return Comment::where('post_id', '=', $this->post->id)
             ->with(['post', 'user', 'comments'])
             ->whereNull('parent_id')
+            ->where('is_active', true)
             ->orderBy('created_at', $order)
             ->get();
     }
