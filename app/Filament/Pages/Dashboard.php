@@ -32,7 +32,7 @@ class Dashboard extends BasePage
         $widgets = [];
         foreach (Filament::getWidgets() as $widget) {
             if (str_contains($widget, 'App\Filament'))
-            $widgets[] = $widget;
+                $widgets[] = $widget;
         }
         return $widgets;
     }

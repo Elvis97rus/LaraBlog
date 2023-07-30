@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Comment;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class CommentItem extends Component
@@ -33,7 +34,7 @@ class CommentItem extends Component
             return response()->redirectToRoute('login');
         }
 
-        if ($this->comment->user_id != $user->id) {
+        if ($this->comment->user_id != $user->id || !$user->canAccessFilament()) {
             return response('You are not allowed to perform this action',403);
         }
 

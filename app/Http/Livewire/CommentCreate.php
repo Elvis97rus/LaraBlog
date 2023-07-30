@@ -33,7 +33,11 @@ class CommentCreate extends Component
         if (!$user) {
             return response()->redirectToRoute('login');
         }
-//        dd($this, $this->commentModel);
+
+        if (!$user->hasVerifiedEmail()) {
+            return response()->redirectToRoute('verification.notice');
+        }
+
         if (isset($this->commentModel) && $this->commentModel) {
             if ($this->commentModel->user_id != $user->id) {
                 return response('You are not allowed to perform this action',403);
@@ -50,7 +54,7 @@ class CommentCreate extends Component
                 'post_id' => $this->post->id,
                 'user_id' => $user->id,
 
-                'is_active' => 1 // TODO сделать секцию в админке для апрувов коментариев, а сохранять изначально не активные
+                'is_active' => 0
             ];
             if(isset($this->parentComment)){
                 $data['parent_id'] = $this->parentComment?->id;

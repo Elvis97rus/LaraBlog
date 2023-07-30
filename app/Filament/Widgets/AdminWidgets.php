@@ -10,7 +10,7 @@ use Filament\Widgets\StatsOverviewWidget\Card;
 
 class AdminWidgets extends BaseWidget
 {
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 1;
 
     protected function getCards(): array
     {
