@@ -30,7 +30,8 @@ class Comments extends Component
 
     protected function getUnapprovedUserComments($active = false)
     {
-        $count = Comment::where('user_id', auth()->user()->id)
+        $user_id = auth()->user()->id ?? 0;
+        $count = Comment::where('user_id', $user_id)
             ->where('is_active', $active)->where('post_id', '=', $this->post->id)->get()->count();
         return $count ? "Спасибо за оставленный комментарий! Он появится после модерации. <br> (модерация занимает до 2х суток)" : '';
     }
